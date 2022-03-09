@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import {
+  initialCategory,
+  selectedCategory,
   todoState,
   TodoStatus,
-  selectedCategory,
-  initialCategory,
-} from '../atoms';
+} from '../../atoms';
 
 const CustomForm = styled.form`
   width: 100%;
@@ -44,11 +44,11 @@ const Button = styled.button<ButtonProps>`
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => (props.chosenColor === '' ? '' : '#55b5cc')};
+    background-color: ${(props) => (props.chosenColor === '' ? '' : '#487eb0')};
   }
 
   &:active {
-    background-color: #82cfe2;
+    background-color: #40739e;
   }
 `;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { ITodo, todoState, TodoStatus } from '../atoms';
+import { ITodo, todoState, TodoStatus } from '../../atoms';
 
 interface DoneBtnProps {
   status?: TodoStatus;
@@ -35,7 +35,6 @@ const TodoTitle = styled.h1`
 
   height: 100%;
   width: 100%;
-  /* background-color: gold; */
 `;
 
 const DeleteBtn = styled.span`
@@ -66,8 +65,9 @@ const Label = styled.div<LabelProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
   background-color: ${(props) => props.bgColor};
 `;
 

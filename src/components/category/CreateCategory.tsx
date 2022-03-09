@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { categoryState, selectedCategory } from '../atoms';
+import { categoryState, selectedCategory } from '../../atoms';
 import randomColor from 'randomcolor';
 
 interface IForm {
@@ -10,13 +10,11 @@ interface IForm {
 }
 
 const CustomForm = styled.form`
-  width: 700px;
   height: 80px;
   padding: 10px 30px;
-  border-bottom: 2px solid #55b5cc;
+  border-bottom: 2px solid #7f8fa6;
 
   box-shadow: 1px 1px 5px gray;
-  margin-top: 30px;
 `;
 
 const Container = styled.div`
@@ -32,26 +30,26 @@ const CustomInput = styled.input.attrs((props) => ({
   width: 100%;
   border: none;
   margin-right: 10px;
-  border-bottom: 1px solid #55b5cc;
+  border-bottom: 1px solid #c23616;
 
   &:focus {
-    border-bottom: 1px solid #1fc3ec;
+    border-bottom: 1px solid #e84118;
   }
 `;
 
 const Button = styled.button`
   width: 50px;
-  background-color: #e2237c;
+  background-color: #487eb0;
   border: 0;
   border-radius: 5px;
   cursor: pointer;
 
   &:hover {
-    background-color: #ee4594;
+    background-color: #40739e;
   }
 
   &:active {
-    background-color: #fa77b4;
+    background-color: #487eb0;
   }
 `;
 
@@ -64,11 +62,19 @@ const ErrorMessage = styled.span`
 
 function CreateCategory() {
   const [categories, setCategories] = useRecoilState(categoryState);
-  const { register, handleSubmit, formState, setValue } = useForm<IForm>();
+  const { register, handleSubmit, formState, setValue, setError } =
+    useForm<IForm>();
   const onValid = ({ category }: IForm) => {
+    if (categories.length === 3) {
+      setError('category', {
+        message: 'Category는 3개까지만 추가할수 있습니다!',
+      });
+      return;
+    }
+
     setCategories((oldCategories) => {
       const newCategory = { category, color: randomColor(), id: Date.now() };
-      return [newCategory, ...oldCategories];
+      return [...oldCategories, newCategory];
     });
     setValue('category', '');
   };

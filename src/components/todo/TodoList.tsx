@@ -1,23 +1,20 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { todoState } from '../atoms';
+import { selectedFilter, todoSelector } from '../../atoms';
 import CreateTodo from './CreateTodo';
 import Todo from './Todo';
 
 const Container = styled.div`
-  width: 700px;
-  height: 80vh;
+  height: 75vh;
   overflow-y: auto;
   box-shadow: 1px 1px 5px gray;
-
-  margin: 0 auto;
 `;
 
 const Header = styled.div`
   width: 100%;
   height: 100px;
-  background-color: #55b5cc;
+  background-color: #353b48;
 
   display: flex;
   justify-content: center;
@@ -30,7 +27,12 @@ const Title = styled.h1`
 `;
 
 function TodoList() {
-  const todos = useRecoilValue(todoState);
+  const currentFilter = useRecoilValue(selectedFilter);
+  const todos = useRecoilValue(todoSelector);
+
+  console.log('currentFilter : ', currentFilter);
+  console.log(todos);
+
   return (
     <Container>
       <Header>

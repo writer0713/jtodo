@@ -1,3 +1,4 @@
+import { generateKey } from 'crypto';
 import { atom, selector } from 'recoil';
 
 const persistedData = (key: string, initialState: any[]) => {
@@ -11,8 +12,14 @@ const persistedData = (key: string, initialState: any[]) => {
 };
 
 export const initialCategory: ICategory = {
-  category: 'etc',
+  category: 'default',
   color: 'gold',
+  id: Date.now(),
+};
+
+export const initialFilter: ICategory = {
+  category: 'all',
+  color: 'gray',
   id: Date.now(),
 };
 
@@ -40,6 +47,11 @@ export const selectedCategory = atom<ICategory>({
   default: initialCategory,
 });
 
+export const selectedFilter = atom<ICategory>({
+  key: 'selectedFilter',
+  default: initialFilter,
+});
+
 export const categoryState = atom<ICategory[]>({
   key: 'category',
   default: persistedData('JTODO.CATEGORIES', [initialCategory]),
@@ -50,10 +62,30 @@ export const todoState = atom<ITodo[]>({
   default: persistedData('JTODO.TODOS', []),
 });
 
+export const filterSelector = selector({
+  key: 'filterSelector',
+  get: ({ get }) => {
+    const categories = get(categoryState);
+    return [initialFilter, ...categories];
+  },
+});
+
 export const todoSelector = selector({
   key: 'todoSelector',
   get: ({ get }) => {
     const todos = get(todoState);
-    return;
+    const currentFilter = get(selectedFilter);
+
+    console.log(currentFilter);
+
+    if (currentFilter.category === 'all') {
+      return todos;
+    }
+
+    return [
+      ...todos.filter(
+        (todo) => todo.category.category === currentFilter.category
+      ),
+    ];
   },
 });

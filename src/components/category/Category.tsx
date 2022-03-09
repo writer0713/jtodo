@@ -1,6 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { ICategory, selectedCategory } from '../atoms';
+import { ICategory, selectedCategory } from '../../atoms';
 
 interface ICategoryProps {
   bgColor: string;
